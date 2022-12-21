@@ -2,9 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dbconnect = require("./config/db");
 const noticemodel = require("./model/Notice.model");
-
+const cors = require("cors");
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 mongoose.set("strictQuery", false);
 
@@ -41,7 +42,7 @@ app.post("/notice", async (req, res) => {
       date: date,
       time: time,
     });
-    console.log(data);
+    // console.log(data);
     return res.status(200).send(data);
   } catch (err) {
     // console.log(err)

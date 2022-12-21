@@ -1,7 +1,39 @@
 import React from "react";
 import styles from "./main.module.css";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export const Notice = () => {
+  const [data, setData] = useState([]);
+  const [text, setText] = useState("");
+
+  const postdata = () => {
+    var username = localStorage.getItem("name");
+    axios
+      .post("http://localhost:8080/notice", {
+        name: username,
+        notice: text,
+      })
+      .then((res) => {
+        getdata();
+      })
+      .catch((err) => console.log(err));
+  };
+  const getdata = () => {
+    axios
+      .get("http://localhost:8080/notice")
+      .then((res) => {
+        let a = res.data;
+        a.reverse();
+        console.log(a);
+        setData(a);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getdata();
+  }, []);
   return (
     <div>
       <div className={styles.Noticeboard}>
@@ -9,28 +41,30 @@ export const Notice = () => {
         <textarea
           name=""
           id=""
-          cols="40"
+          cols="35"
           rows="5"
           placeholder="Write the notice... ✏️"
+          onChange={(e) => setText(e.target.value)}
         ></textarea>
         <br />
-        <button className={styles.btnn}>Post</button>
+        <button className={styles.btnn} onClick={postdata}>
+          Post
+        </button>
       </div>
       <div className={styles.Notice}>
-        <div className={styles.box}>
-          <div> i am trying to make some good things for me i am trying to make some good things for mei am trying to make some good things for mei am trying to make some good things for mei am trying to make some good things for mei am trying to make some good things for mei am trying to make some good things for me</div>
-          <div className={styles.datetime}>
-            <p>username</p>
-            <p>date: time</p>
-          </div>
-        </div>
-        <div className={styles.box}>
-          <div> i am trying to make some good things for me i am trying to make some good things for mei am trying to make some good things for mei am trying to make some good things for mei am trying to make some good things for mei am trying to make some good things for mei am trying to make some good things for me</div>
-          <div className={styles.datetime}>
-            <p>username</p>
-            <p>date: time</p>
-          </div>
-        </div>
+        {data?.map((e) => {
+          return (
+            <div className={styles.box} key={e._id}>
+              <div>{e.notice}</div>
+              <div className={styles.datetime}>
+                <p>{e.name}</p>
+                <p>
+                  {e.date}: {e.time}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
