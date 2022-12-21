@@ -8,6 +8,7 @@ export const Home = () => {
 
   const login = () => {
     console.log(typeof(text));
+    navigate("/notice")
   };
   return (
     <div className={styles.Home}>
