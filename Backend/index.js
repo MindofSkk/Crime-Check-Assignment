@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config()
+
 const dbconnect = require("./config/db");
 const noticemodel = require("./model/Notice.model");
 const cors = require("cors");
@@ -50,9 +52,9 @@ app.post("/notice", async (req, res) => {
   }
 });
 
-app.listen(8080, () => {
+app.listen(process.env.PORT, async() => {
   try {
-    dbconnect();
+    await dbconnect();
     console.log("Backend Start");
   } catch (err) {
     console.log("error", err);

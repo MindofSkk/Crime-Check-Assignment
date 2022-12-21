@@ -7,16 +7,12 @@ export const Home = () => {
   const [text, setText] = useState("");
 
   const login = () => {
-
-
-    if(text)
-    {
+    if (text) {
       localStorage.setItem("name", text);
       navigate("/notice");
-    }else{
-      alert("Enter the User Name")
+    } else {
+      alert("Enter the User Name");
     }
-  
   };
   return (
     <div className={styles.Home}>
@@ -24,7 +20,6 @@ export const Home = () => {
       <input
         type="text"
         placeholder="Enter User Name...."
-        
         onChange={(e) => setText(e.target.value)}
       />{" "}
       <br />

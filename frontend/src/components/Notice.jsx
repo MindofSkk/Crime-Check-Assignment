@@ -11,7 +11,7 @@ export const Notice = () => {
   const postdata = () => {
     var username = localStorage.getItem("name");
     axios
-      .post("http://localhost:8080/notice", {
+      .post("https://backend-code-production.up.railway.app/notice", {
         name: username,
         notice: text,
       })
@@ -22,7 +22,7 @@ export const Notice = () => {
   };
   const getdata = () => {
     axios
-      .get("http://localhost:8080/notice")
+      .get("https://backend-code-production.up.railway.app/notice")
       .then((res) => {
         let a = res.data;
         a.reverse();
